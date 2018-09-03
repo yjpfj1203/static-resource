@@ -45,5 +45,5 @@
         http.port: 8300<br>
         discovery.zen.ping.unicast.hosts: ["127.0.0.1"]<br>
         如果配置成功那么在es_head中查看到的内容如下：
-
+        ![es分布式安装](https://raw.githubusercontent.com/yjpfj1203/static-resource/master/elastic-search-doc/image/es_slaves.png)
 参考网站内容：https://www.cnblogs.com/liuxiaoming123/p/8081883.html
