@@ -158,6 +158,6 @@
          在服务注册中心启动时会创建一个定时服务，默认每隔60秒会关当前清单中超时(默认90秒)且没有续约的服务剔除出去。<br>
          自我保护，Eureka会统计心跳失败在15分钟内低于85%的服务，Eureka server会将其注册信息保护起来，让期不会过期。所以在开发的时候，一般使用下面的配置，关闭自我保护。<br>
          eureka.server.enable-self-preservation: false<br>
-         com.netflix.appinfo.EurekaInstanceConfig是eureka.instance.后面可以配置的所有属性<br>
+         com.netflix.appinfo.EurekaInstanceConfig是eureka.instance.后面可以配置的所有属性![eureka.instance](https://raw.githubusercontent.com/yjpfj1203/static-resource/master/elastic-search-doc/image/es_slaves.png)<br>
          com.netflix.discovery.EurekaClientConfig是eureka.client.后面可以配置的所有属性<br>
          com.netflix.eureka.EurekaServerConfig是eureka.server.后面可以配置的所有属性<br>
