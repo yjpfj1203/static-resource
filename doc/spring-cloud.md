@@ -160,3 +160,4 @@
          eureka.server.enable-self-preservation: false<br>
          com.netflix.appinfo.EurekaInstanceConfig是eureka.instance.后面可以配置的所有属性<br>
          com.netflix.discovery.EurekaClientConfig是eureka.client.后面可以配置的所有属性<br>
+         com.netflix.eureka.EurekaServerConfig是eureka.server.后面可以配置的所有属性<br>
