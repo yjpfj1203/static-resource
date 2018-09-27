@@ -1,0 +1,25 @@
+server:
+    port: 8889         #服务端口配置
+spring:
+    application:
+        name: config-service
+    datasource:
+        url: jdbc:mysql://localhost:3306/common?useUnicode=true&characterEncoding=utf8&useSSL=true
+        username: root
+        password: lh1203
+    jpa:
+        database: mysql
+        showSql: true
+        database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+        hibernate:
+            ddl-auto: update
+
+logging:
+    path: /temp/logs
+    pattern:
+        file: '%d{yyyy-MMM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{15} - %msg%n'
+#        console: '%d{yyyy-MMM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{15} - %msg%n'
+    level:
+        org.hibernate.SQL: DEBUG
+        com.yjpfj1203.common: info
+        root: info
