@@ -47,7 +47,7 @@
                   data: ./elasticsearch/data #elasticsearch数据存储目录
      ```
      这个地方的port并不是eclasticsearch.yml中的端口，而是es-head上看到的。如下图：
-     ![ip:port](https://raw.githubusercontent.com/yjpfj1203/static-resource/master/elastic-search-doc/image/es-port.png)
+     ![ip:port](https://raw.githubusercontent.com/yjpfj1203/static-resource/master/doc/image/es-port.png)
      * 多个node配置文件
      ```java
         @Configuration
