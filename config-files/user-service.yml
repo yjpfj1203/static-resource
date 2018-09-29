@@ -1,6 +1,7 @@
 server:
     port: 8888         #服务端口配置
 security.oauth2.resource.filter-order: 3
+eureka.client.serviceUrl.defaultZone: http://localhost:8111/eureka/
 spring:
     flyway:
         enabled: true
