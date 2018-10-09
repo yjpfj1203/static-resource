@@ -1,17 +1,15 @@
-server:
-  port: 8121         #服务端口配置
 spring:
   data:
     elasticsearch:
       cluster-name: liuhan #默认为elasticsearch
-      cluster-nodes: 10.0.2.85:9300, 10.0.2.85:9301, 10.0.2.85:9302 #配置es节点信息，逗号分隔，如果没有指定，则启动ClientNode
+      cluster-nodes: 127.0.0.1:9300, 127.0.0.1:9301, 127.0.0.1:9302 #配置es节点信息，逗号分隔，如果没有指定，则启动ClientNode
       repositories.enabled: true
       properties:
         path:
           logs: ./elasticsearch/log #elasticsearch日志存储目录
           data: ./elasticsearch/data #elasticsearch数据存储目录
     mongodb:
-      host: 10.0.2.85
+      host: 127.0.0.1
       port: 27017
       database: statistics
       username: admin
