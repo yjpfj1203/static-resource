@@ -7,12 +7,12 @@ spring:
         baselineOnMigrate: true
         locations: classpath:db/migration
     datasource:
-        url: jdbc:mysql://localhost:3306/user?useUnicode=true&characterEncoding=utf8&useSSL=true
+        url: jdbc:mysql://10.0.2.85:3306/user?useUnicode=true&characterEncoding=utf8&useSSL=true
         username: root
         password: lh1203
     ###############################
     #         redis服务器          #
-    redis.url: redis://localhost:6379
+    redis.url: redis://10.0.2.85:6379
 
 ############################
 #        mybatis配置       #

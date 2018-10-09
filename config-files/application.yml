@@ -1,1 +1,5 @@
 name: this is application.yml
+spring:
+    application:
+        name: applicationName //向注册中心注册的服务名称
+    eureka.client.serviceUrl.defaultZone: http://register1:8111/eureka/,http://register2:8112/eureka/
