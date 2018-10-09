@@ -8,7 +8,7 @@ spring:
         locations: classpath:db/migration
     datasource:
         url: jdbc:mysql://10.0.2.85:3306/user?useUnicode=true&characterEncoding=utf8&useSSL=true
-        username: root
+        username: lh
         password: lh1203
     ###############################
     #         redis服务器          #
