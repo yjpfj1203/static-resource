@@ -10,7 +10,7 @@ api基本格式：http://[ip]:[port]/<索引>/<类型>/<文档id><br/>
 GET/PUT/POST/DELETE<br/>
 
 ## 结构创建
-### 路径：127.0.0.1:9200/people put<br/>
+### 路径：127.0.0.1:9200/people PUT<br/>
 
 ```
 {
@@ -48,7 +48,7 @@ GET/PUT/POST/DELETE<br/>
 　　properties：属性的集合 ：（它下面的为各个属性，都是"属性名":{"（类型）type":"对应的类型"}）注：其中Data属性有format设置日期格式<br/>
 
 ## 数据插入(/索引/类型/id)
-### 指定文档id插入：127.0.0.1:9200/people/man/1 put
+### 指定文档id插入：127.0.0.1:9200/people/man/1 PUT
 ```
 {
     "name":"晓明",
@@ -58,7 +58,7 @@ GET/PUT/POST/DELETE<br/>
 }
 ```
 
-### 自动产生文档id插入: 127.0.0.1:9200/people/man post
+### 自动产生文档id插入: 127.0.0.1:9200/people/man POST
 ```
 {
     "name":"Auto晓明",
@@ -68,7 +68,7 @@ GET/PUT/POST/DELETE<br/>
 }
 ```
 
-### 修改：127.0.0.1:9200/people/man/1/_update put
+### 修改：127.0.0.1:9200/people/man/1/_update PUT
 ```
 直接修改文档
 {
@@ -97,3 +97,20 @@ GET/PUT/POST/DELETE<br/>
 
 　　_source 为当前文档
 ```
+### 修改：127.0.0.1:9200/people/man/1/_update POST
+```
+{
+    "script":{
+        "lang":"painless",
+        "inline":"ctx._source.age = params.age",
+        "params":{
+            "age":100
+        }
+    }
+}
+```
+### 删除文档：127.0.0.1:9200/people/man/1 DELETE
+
+### 删除索引：127.0.0.1:9200/people DELETE
+
+## 查询
