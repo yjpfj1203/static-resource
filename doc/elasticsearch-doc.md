@@ -6,7 +6,7 @@
 备份：拷贝一份分片就完成了分片备份<br/>
 
 # 基本用法
-api基本格式：http://<ip>:<port>/<索引>/<类型>/<文档id><br/>
+api基本格式：http://[ip]:[port]/<索引>/<类型>/<文档id><br/>
 GET/PUT/POST/DELETE<br/>
 
 # 结构化创建
