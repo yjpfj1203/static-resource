@@ -10,7 +10,7 @@ api基本格式：http://[ip]:[port]/<索引>/<类型>/<文档id><br/>
 GET/PUT/POST/DELETE<br/>
 
 # 结构化创建
-路径：/people<br/>
+### 路径：/people<br/>
 
 ```
 {
@@ -40,7 +40,7 @@ GET/PUT/POST/DELETE<br/>
 }
 ```
 
-settings: 设置<br/>
+### settings: 设置<br/>
 　　number_of_shards: 分片数<br/>
 　　number_of_replicas：备份数<br/>
 　　mappings: 索引的映射<br/>
