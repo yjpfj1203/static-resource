@@ -9,8 +9,8 @@
 api基本格式：http://[ip]:[port]/<索引>/<类型>/<文档id><br/>
 GET/PUT/POST/DELETE<br/>
 
-# 结构化创建
-### 路径：/people<br/>
+## 结构创建
+### 路径：127.0.0.1:9200/people put<br/>
 
 ```
 {
@@ -46,3 +46,54 @@ GET/PUT/POST/DELETE<br/>
 　　mappings: 索引的映射<br/>
 　　man: 映射名称，此处的映射名称只能有一个不能出现多个映射（这是一个设计失误，后面的版本将不再支持。官方给出解释是：https://www.elastic.co/guide/en/elasticsearch/reference/6.0/removal-of-types.html ）<br/>
 　　properties：属性的集合 ：（它下面的为各个属性，都是"属性名":{"（类型）type":"对应的类型"}）注：其中Data属性有format设置日期格式<br/>
+
+## 数据插入(/索引/类型/id)
+### 指定文档id插入：127.0.0.1:9200/people/man/1 put
+```
+{
+    "name":"晓明",
+    "country":"china",
+    "age":26,
+    "date":"1992-08-08"
+}
+```
+
+### 自动产生文档id插入: 127.0.0.1:9200/people/man post
+```
+{
+    "name":"Auto晓明",
+    "country":"Autochina",
+    "age":26,
+    "date":"1992-08-08"
+}
+```
+
+### 修改：127.0.0.1:9200/people/man/1/_update put
+```
+直接修改文档
+{
+    "doc":{
+        "name":"修改晓明"
+    }
+}
+
+脚本修改文档
+{
+    "script":{
+        "lang":"painless",
+        "inline":"ctx._source.age += 10"
+    }
+}
+
+注：script 是脚本标识
+
+　　lang 是脚本语言
+
+　　painless 是内置脚本语言
+
+　　inline 是指定脚本内容
+
+　　ctx 是脚本上下文
+
+　　_source 为当前文档
+```
