@@ -70,3 +70,13 @@ u=702257389,1274025419&fm=27&gp=0.jpg "区块链")
 ```
 
 ![blockchain](https://b-ssl.duitang.com/uploads/item/201509/30/20150930142149_wAdk5.jpeg "区块链")
+
+# 六：超链接
+语法：
+```
+[超链接名](超链接地址 "超链接title")
+title可加可不加
+```
+示例：
+[简书](http://jianshu.com)
+[百度](http://baidu.com)
