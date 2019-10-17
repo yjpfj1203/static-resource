@@ -114,3 +114,115 @@ GET/PUT/POST/DELETE<br/>
 ### 删除索引：127.0.0.1:9200/people DELETE
 
 ## 查询
+### 准备
+#### 创建结构：127.0.0.1:9200/people01 PUT
+```
+{
+  "settings": {
+    "number_of_shards": 3,
+    "number_of_replicas": 1
+  },
+  "novel": {
+    "properties": {
+      "title": {
+        "type": "text"
+      },
+      "author": {
+        "type": "keyword"
+      },
+      "tittle": {
+        "type": "text"
+      },
+      "publish_date": {
+        "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis",
+        "type": "date"
+      }
+    }
+  }
+}
+```
+
+#### 插入数据：127.0.0.1:9200/book/novel/1
+```
+{
+    "name":"晓明1",
+    "country":"china1",
+    "age":26,
+    "date":"1992-08-08"
+}
+```
+### 简单查询
+#### 127.0.0.1:9200/book/novel/1 GET
+#### 条件查询：127.0.0.1:9200/book/_search POST
+```
+1、全部查询
+{
+    "query":{
+        "match_all":{}
+    },
+    "from":1,
+    "size":1
+}
+2、按关键字查询（含有按指定字段排序）
+{
+    "query":{
+        "match":{
+            "name":"晓明"
+        }
+    },
+    "sort":[
+        {"_id":"desc"}
+        ]
+}
+3.解释请求json串：
+match_all 是全部查询
+query 是查询关键字
+from 是从哪里查
+size 是显示多少条数据
+sort 是排序设置
+```
+### 聚合查询
+#### 127.0.0.1:9200/book/_search POST
+```
+{
+  "aggs": {
+    "group_by_name": {
+      "terms": {
+        "field": "name"
+      }
+    },
+    "group_by_country": {
+      "terms": {
+        "field": "country"
+      }
+    }
+  }
+}
+
+如果上面查询报错，可先执行下面的语句
+127.0.0.1:9200/book/_mapping/novel/ PUT
+{
+  "properties": {
+    "name": { 
+      "type":     "text",
+      "fielddata": true
+    },
+     "country": { 
+      "type":     "text",
+      "fielddata": true
+    }
+  }
+}
+
+注：解析请求json字符串：
+aggs：聚合查询关键字
+group_by_word_count ：聚合条件的名字（名字可自定义）
+terms 关键词
+field 是指定字段
+```
+
+
+
+
+
+
