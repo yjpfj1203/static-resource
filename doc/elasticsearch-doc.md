@@ -10,7 +10,7 @@ api基本格式：http://[ip]:[port]/<索引>/<类型>/<文档id><br/>
 GET/PUT/POST/DELETE<br/>
 
 ## 结构创建
-### 路径：127.0.0.1:9200/people PUT<br/>
+### 路径： http://127.0.0.1:9200/people PUT<br/>
 
 ```
 {
@@ -48,7 +48,7 @@ GET/PUT/POST/DELETE<br/>
 　　properties：属性的集合 ：（它下面的为各个属性，都是"属性名":{"（类型）type":"对应的类型"}）注：其中Data属性有format设置日期格式<br/>
 
 ## 数据插入(/索引/类型/id)
-### 指定文档id插入：127.0.0.1:9200/people/man/1 PUT
+### 指定文档id插入： http://127.0.0.1:9200/people/man/1 PUT
 ```
 {
     "name":"晓明",
@@ -58,7 +58,7 @@ GET/PUT/POST/DELETE<br/>
 }
 ```
 
-### 自动产生文档id插入: 127.0.0.1:9200/people/man POST
+### 自动产生文档id插入:  http://127.0.0.1:9200/people/man POST
 ```
 {
     "name":"Auto晓明",
@@ -68,7 +68,7 @@ GET/PUT/POST/DELETE<br/>
 }
 ```
 
-### 修改：127.0.0.1:9200/people/man/1/_update PUT
+### 修改： http://127.0.0.1:9200/people/man/1/_update PUT
 ```
 直接修改文档
 {
@@ -109,13 +109,13 @@ GET/PUT/POST/DELETE<br/>
     }
 }
 ```
-### 删除文档：127.0.0.1:9200/people/man/1 DELETE
+### 删除文档： http://127.0.0.1:9200/people/man/1 DELETE
 
-### 删除索引：127.0.0.1:9200/people DELETE
+### 删除索引： http://127.0.0.1:9200/people DELETE
 
 ## 查询
 ### 准备
-#### 创建结构：127.0.0.1:9200/people01 PUT
+#### 创建结构： http://127.0.0.1:9200/people01 PUT
 ```
 {
   "settings": {
@@ -142,7 +142,7 @@ GET/PUT/POST/DELETE<br/>
 }
 ```
 
-#### 插入数据：127.0.0.1:9200/book/novel/1
+#### 插入数据： http://127.0.0.1:9200/book/novel/1
 ```
 {
     "name":"晓明1",
@@ -152,8 +152,8 @@ GET/PUT/POST/DELETE<br/>
 }
 ```
 ### 简单查询
-#### 127.0.0.1:9200/book/novel/1 GET
-#### 条件查询：127.0.0.1:9200/book/_search POST
+#### http://127.0.0.1:9200/book/novel/1 GET
+#### 条件查询：http://127.0.0.1:9200/book/_search POST
 ```
 1、全部查询
 {
@@ -182,7 +182,7 @@ size 是显示多少条数据
 sort 是排序设置
 ```
 ### 聚合查询
-#### 127.0.0.1:9200/book/_search POST
+#### http://127.0.0.1:9200/book/_search POST
 ```
 {
   "aggs": {
@@ -200,7 +200,7 @@ sort 是排序设置
 }
 
 如果上面查询报错，可先执行下面的语句
-127.0.0.1:9200/book/_mapping/novel/ PUT
+ http://127.0.0.1:9200/book/_mapping/novel/ PUT
 {
   "properties": {
     "name": { 
@@ -221,7 +221,19 @@ terms 关键词
 field 是指定字段
 ```
 
-
+#### http://127.0.0.1:9200/book/_search   POST
+```
+{
+  "aggs": {
+    "group_by_age": {
+      "stats": {
+        "field": "age"
+      }
+    }
+  }
+}
+注：计算年龄的统计  总条数、最大值、最小值、平均值、总和   若：stats改成min则只显示最小值
+```
 
 
 
