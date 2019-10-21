@@ -12,8 +12,7 @@ GET/PUT/POST/DELETE<br/>
 ## 运维命令集合
 ### cat系列
 _cat系统提供集群状态的接口，可以通过执行
-localhost:9200/_cat获取所有_cat系统的操作
-输出结果：
+GET localhost:9200/_cat获取所有_cat系统的操作。输出结果：
 ```
 /_cat/allocation
 /_cat/shards
@@ -43,8 +42,115 @@ localhost:9200/_cat获取所有_cat系统的操作
 /_cat/snapshots/{repository}
 /_cat/templates
 ```
+### cluster系列
+1. 查询设置集群状态
+GET http://localhost:9200/_cluster/health?pretty=true
+pretty=true 表示格式化输出
+level=indices 表示显示索引状态
+level=shards 表示显示分片信息
+2. 显示集群系统信息
+GET http://localhost:9200/_cluster/stats?pretty=true
+3. 修改集群配置
+例：PUT http://localhost:9200/_cluster/settings
+```
+{
+    "persistent" : {
+        "discovery.zen.minimum_master_nodes" : 2
+    }
+}
+transient 表示临时的，persistent表示永久的
+```
+4. 对shard的手动控制
+POST http://localhost:9200/_cluster/reroute
+5. 关闭节点
+```
+关闭指定192.168.1.1节点
+POST http://192.168.1.1:9200/_cluster/nodes/_local/_shutdown
+POST http://localhost:9200/_cluster/nodes/192.168.1.1/_shutdown
+关闭主节点
+POST http://localhost:9200/_cluster/nodes/_master/_shutdown
+关闭整个集群
+POST http://localhost:9200/_shutdown?delay=10s
+POST http://localhost:9200/_cluster/nodes/_shutdown
+POST http://localhost:9200/_cluster/nodes/_all/_shutdown
+delay=10s表示延迟10秒关闭
+```
+### nodes系列
+查询节点的状态
+```
+GET http://localhost:9200/_nodes/stats?pretty=true
+GET http://localhost:9200/_nodes/192.168.1.2/stats?pretty=true 
+GET http://localhost:9200/_nodes/process
+GET http://localhost:9200/_nodes/_all/process
+GET http://localhost:9200/_nodes/192.168.1.2/jvm,process
+GET http://localhost:9200/_nodes/192.168.1.2,192.168.1.3/info/jvm,process
+GET http://localhost:9200/_nodes/192.168.1.2,192.168.1.3/_all
+GET http://localhost:9200/_nodes/hot_threads
+```
+### 索引操作
+1. 创建索引
+PUT http://localhost:9200/fvp~oncarsummary/oncarsummary
+PUT http://localhost:9200/fvp~onaviationtasksummary/onaviationtasksummary
+2. 查看所有索引
+GET http://localhost:9200/_cat/indices?v
+3. 索引数据
+```
+POST http://localhost:9200/{index}/{type}/{id} 
+  body: {"a":"avalue","b":"bvalue"}
+PUT http://localhost:9200/{index}/{type}/{id} 
+  body: {"a":"avalue","b":"bvalue"}
+```
+4. 查询索引
+GET http://localhost:9200/fvp~onaviationtasksummary/fvp/_search?q=*&pretty
+GET http://localhost:9200/fvp~oncarsummary/fvp/_search?q=*&pretty
+5. 删除索引
+DELETE http://localhost:9200/{index}/{type}/{id}
+6. 获取mapping
+GET http://localhost:9200/{index}/{type}/_mapping?pretty
+7. 刷新索引
+POST http://localhost:9200/kimchy,elasticsearch/_refresh
+POST http://localhost:9200/_refresh
+8. 设置mapping
+POST http://localhost:9200/productindex/product/_mapping?pretty
+```
+{
+    "product": {
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "store": "yes"
+                },
+                "description": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                },
+                "price": {
+                    "type": "double"
+                },
+                "onSale": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "type": "integer"
+                },
+                "createDate": {
+                    "type": "date"
+                }
+            }
+        }
+}
+```
+9. 统计ES某个索引数据量
+GET http://localhost:9200/_cat/count/new-sgs-rbil-core-system-dds-next-tcs-server-core-dcn-2017-06-27
+10. 查看模板
+GET http://localhost:9200/_template/fvp_waybillnewstatus_template
+11. 设置模板
+PUT http://localhost:9200/_template/fvp_waybillnewstatus_template?pretty
+12. 删除模板
+DELETE localhost:9200/_template/template_1
+
 ## 结构创建
-### 路径： http://127.0.0.1:9200/people PUT<br/>
+### 路径： http://localhost:9200/people PUT<br/>
 
 ```
 {
