@@ -9,6 +9,40 @@
 api基本格式：http://[ip]:[port]/<索引>/<类型>/<文档id><br/>
 GET/PUT/POST/DELETE<br/>
 
+## 运维命令集合
+### cat系列
+_cat系统提供集群状态的接口，可以通过执行
+localhost:9200/_cat获取所有_cat系统的操作
+输出结果：
+```
+/_cat/allocation
+/_cat/shards
+/_cat/shards/{index}
+/_cat/master
+/_cat/nodes
+/_cat/tasks
+/_cat/indices
+/_cat/indices/{index}
+/_cat/segments
+/_cat/segments/{index}
+/_cat/count
+/_cat/count/{index}
+/_cat/recovery
+/_cat/recovery/{index}
+/_cat/health
+/_cat/pending_tasks
+/_cat/aliases
+/_cat/aliases/{alias}
+/_cat/thread_pool
+/_cat/thread_pool/{thread_pools}
+/_cat/plugins
+/_cat/fielddata
+/_cat/fielddata/{fields}
+/_cat/nodeattrs
+/_cat/repositories
+/_cat/snapshots/{repository}
+/_cat/templates
+```
 ## 结构创建
 ### 路径： http://127.0.0.1:9200/people PUT<br/>
 
