@@ -43,14 +43,14 @@ GET localhost:9200/_cat获取所有_cat系统的操作。输出结果：
 /_cat/templates
 ```
 ### cluster系列
-1. 查询设置集群状态
-GET http://localhost:9200/_cluster/health?pretty=true
-pretty=true 表示格式化输出
-level=indices 表示显示索引状态
-level=shards 表示显示分片信息
-2. 显示集群系统信息
+1. 查询设置集群状态<br/>
+GET http://localhost:9200/_cluster/health?pretty=true<br/>
+pretty=true 表示格式化输出<br/>
+level=indices 表示显示索引状态<br/>
+level=shards 表示显示分片信息<br/>
+2. 显示集群系统信息<br/>
 GET http://localhost:9200/_cluster/stats?pretty=true
-3. 修改集群配置
+3. 修改集群配置<br/>
 例：PUT http://localhost:9200/_cluster/settings
 ```
 {
@@ -60,7 +60,7 @@ GET http://localhost:9200/_cluster/stats?pretty=true
 }
 transient 表示临时的，persistent表示永久的
 ```
-4. 对shard的手动控制
+4. 对shard的手动控制<br/>
 POST http://localhost:9200/_cluster/reroute
 5. 关闭节点
 ```
@@ -88,10 +88,10 @@ GET http://localhost:9200/_nodes/192.168.1.2,192.168.1.3/_all
 GET http://localhost:9200/_nodes/hot_threads
 ```
 ### 索引操作
-1. 创建索引
-PUT http://localhost:9200/fvp~oncarsummary/oncarsummary
+1. 创建索引<br/>
+PUT http://localhost:9200/fvp~oncarsummary/oncarsummary<br/>
 PUT http://localhost:9200/fvp~onaviationtasksummary/onaviationtasksummary
-2. 查看所有索引
+2. 查看所有索引<br/>
 GET http://localhost:9200/_cat/indices?v
 3. 索引数据
 ```
@@ -100,17 +100,17 @@ POST http://localhost:9200/{index}/{type}/{id}
 PUT http://localhost:9200/{index}/{type}/{id} 
   body: {"a":"avalue","b":"bvalue"}
 ```
-4. 查询索引
-GET http://localhost:9200/fvp~onaviationtasksummary/fvp/_search?q=*&pretty
+4. 查询索引<br/>
+GET http://localhost:9200/fvp~onaviationtasksummary/fvp/_search?q=*&pretty<br/>
 GET http://localhost:9200/fvp~oncarsummary/fvp/_search?q=*&pretty
-5. 删除索引
+5. 删除索引<br/>
 DELETE http://localhost:9200/{index}/{type}/{id}
-6. 获取mapping
+6. 获取mapping<br/>
 GET http://localhost:9200/{index}/{type}/_mapping?pretty
-7. 刷新索引
-POST http://localhost:9200/kimchy,elasticsearch/_refresh
+7. 刷新索引<br/>
+POST http://localhost:9200/kimchy,elasticsearch/_refresh<br/>
 POST http://localhost:9200/_refresh
-8. 设置mapping
+8. 设置mapping<br/>
 POST http://localhost:9200/productindex/product/_mapping?pretty
 ```
 {
@@ -140,13 +140,13 @@ POST http://localhost:9200/productindex/product/_mapping?pretty
         }
 }
 ```
-9. 统计ES某个索引数据量
+9. 统计ES某个索引数据量<br/>
 GET http://localhost:9200/_cat/count/new-sgs-rbil-core-system-dds-next-tcs-server-core-dcn-2017-06-27
-10. 查看模板
+10. 查看模板<br/>
 GET http://localhost:9200/_template/fvp_waybillnewstatus_template
-11. 设置模板
+11. 设置模板<br/>
 PUT http://localhost:9200/_template/fvp_waybillnewstatus_template?pretty
-12. 删除模板
+12. 删除模板<br/>
 DELETE localhost:9200/_template/template_1
 
 ## 结构创建
