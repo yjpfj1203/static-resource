@@ -14,33 +14,33 @@ GET/PUT/POST/DELETE<br/>
 _cat系统提供集群状态的接口，可以通过执行
 GET localhost:9200/_cat获取所有_cat系统的操作。输出结果：
 ```
-/_cat/allocation
-/_cat/shards
-/_cat/shards/{index}
-/_cat/master
-/_cat/nodes
+/_cat/allocation           查询每个节点上分配的分片（shard）的数量和每个分片（shard）所使用的硬盘容量
+/_cat/shards               这个命令可以用于查看分片的迁移情况和分片的状态
+/_cat/shards/{index}       输出节点包含分片的详细信息
+/_cat/master               仅用于显示master的节点ID，绑定IP地址，节点名称
+/_cat/nodes                输出当前集群的拓扑结构（包括当前节点所在的地方和整个集群的相关信息等）
 /_cat/tasks
-/_cat/indices
-/_cat/indices/{index}
-/_cat/segments
-/_cat/segments/{index}
-/_cat/count
+/_cat/indices              索引列表
+/_cat/indices/{index}      查询指定索引index的详细信息
+/_cat/segments             输出索引分片中关于segment的低层级的信息
+/_cat/segments/{index}     查询指定索引（index1,index2）的segments信息
+/_cat/count                快速查询当前整个集群或者指定索引的document的数量
 /_cat/count/{index}
-/_cat/recovery
+/_cat/recovery             提供一个视图关于索引分片 正在恢复或者已经完成恢复的相关信息
 /_cat/recovery/{index}
-/_cat/health
-/_cat/pending_tasks
-/_cat/aliases
+/_cat/health               查询当前集群的健康信息，ts用于控制是否显示时间戳
+/_cat/pending_tasks        输出集群中正在执行的任务
+/_cat/aliases              查询当前配置索引，过滤器，路由的别名
 /_cat/aliases/{alias}
-/_cat/thread_pool
+/_cat/thread_pool          输出每个节点集群范围的线程池统计信息，默认情况下返回正在活动，队列和被拒绝的统计信息
 /_cat/thread_pool/{thread_pools}
-/_cat/plugins
-/_cat/fielddata
+/_cat/plugins              输出每个节点正在运行的插件信息
+/_cat/fielddata            查询集群中每个节点中的fileddata所使用的堆内存
 /_cat/fielddata/{fields}
-/_cat/nodeattrs
-/_cat/repositories
+/_cat/nodeattrs            输出显示自定义节点属性
+/_cat/repositories         输出集群中注册快照存储库
 /_cat/snapshots/{repository}
-/_cat/templates
+/_cat/templates            输出当前正在存在的模板信息
 ```
 ### cluster系列
 1. 查询设置集群状态<br/>
