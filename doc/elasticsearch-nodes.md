@@ -30,8 +30,9 @@ node.master和node.data都为false时，这个节点可以作为一个类似prox
 #### B：NodeA选自己当Master
 - 此时NodeA会等别的node来join，即等待别的node的选票，当收集到超过半数的选票时，认为自己成为master，然后变更cluster_state中的master node为自己，并向集群发布这一消息
 
-# nodes节点的关闭与开启
-### master节点关闭
-1. 假设有多个master候选节点(A，B，C)，如果当前B是master节点，则需要在一分钟后，会重新选举master节点(见master选举方式)。并且，B节点上的数据，会根据分片数量、副本数量重新分配到各个节点。
-2. 假设有多个数据节点(D，E，F)，如果关闭D节点，当master确定节点失效后，会根据分片数量、副本数量重新分配到各个节点。
+## nodes节点的关闭与开启
+1. master节点关闭<br/>
+假设有多个master候选节点(A，B，C)，如果当前B是master节点，则需要在一分钟后，会重新选举master节点(见master选举方式)。并且，B节点上的数据，会根据分片数量、副本数量重新分配到各个节点。
+2. data节点关闭<br/>
+假设有多个数据节点(D，E，F)，如果关闭D节点，当master确定节点失效后，会根据分片数量、副本数量重新分配到各个节点。
 
