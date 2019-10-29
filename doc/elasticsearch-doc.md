@@ -293,6 +293,13 @@ DELETE localhost:9200/_template/template_1
 ```
 ### 简单查询
 #### http://127.0.0.1:9200/book/novel/1 GET
+```
+GET http://127.0.0.1:9200/book/novel/1?_source=first_name,age
+仅查询first_name和age两个属性
+
+GET http://127.0.0.1:9200/book/novel/1/_source
+仅查询数据体，而不要其他元数据信息
+```
 #### 条件查询：http://127.0.0.1:9200/book/_search POST
 ```
 1、全部查询
