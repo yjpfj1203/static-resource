@@ -28,7 +28,7 @@
         network.host: 127.0.0.1<br>
         退出es并重新启动。<br>
     * 配置两个子节点，创建es_slave文件夹，存入子节点服务。<br>
-        copy两份es的原文件，到es_slave中，并分别命令为：es_slave1, es_slave2<br>
+        copy两份es的原文件，到es_slave中，并分别命令为：es_slave1, es_slave2；如果在copy的data文件夹下有数据，将其下的数据全部删除<br>
         在es_slave1/config/elasticsearch.yml尾部添加<br>
         cluster.name: xiaoming<br>
         node.name: slave1<br>
