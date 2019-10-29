@@ -1,4 +1,10 @@
 ```
+http.cors.enabled: true
+#是否开启跨域访问
+
+http.cors.allow-origin: "*"
+#开启跨域访问后的地址限制，*表示无限制
+
 cluster.name: ES-Cluster
 #ES集群名称，同一个集群内的所有节点集群名称必须保持一致
 
@@ -12,13 +18,57 @@ node.data: false
 #允许该节点存储索引数据（默认开启）
 #关于Elasticsearch节点的角色功能详解，请看：https://www.dockerc.com/elasticsearch-master-or-data/
 
-path.data: /data/ES-Cluster/es01/data1,/data/ES-Cluster/es01/data2
-#ES是搜索引擎，会创建文档，建立索引，此路径是索引的存放目录，如果我们的日志数据较为庞大，那么索引所占用的磁盘空间也是不可小觑的
-#这个路径建议是专门的存储系统，如果不是存储系统，最好也要有冗余能力的磁盘，此目录还要对elasticsearch的运行用户有写入权限
-#path可以指定多个存储位置，分散存储，有助于性能提升，以至于怎么分散存储请看详解https://www.dockerc.com/elk-theory-elasticsearch/
+path.conf: /path/to/conf
+# 设置配置文件的存储路径，默认是es根目录下的config文件夹。
 
-path.logs: /data/ES-Cluster/master/ES-master-10.150.55.94/logs
-#elasticsearch专门的日志存储位置，生产环境中建议elasticsearch配置文件与elasticsearch日志分开存储
+path.data: /path/to/data
+# 设置索引数据的存储路径，默认是es根目录下的data文件夹，可以设置多个存储路径，用逗号隔开，例：
+# path.data: /path/to/data1,/path/to/data2
+
+path.work: /path/to/work
+# 设置临时文件的存储路径，默认是es根目录下的work文件夹。
+
+path.logs: /path/to/logs
+# 设置日志文件的存储路径，默认是es根目录下的logs文件夹 
+
+path.plugins: /path/to/plugins
+# 设置插件的存放路径，默认是es根目录下的plugins文件夹, 插件在es里面普遍使用，用来增强原系统核心功能。
+
+cluster.initial_master_nodes: ["10.150.55.94:9301", "10.150.55.95:9301","10.150.30.246:9301"]
+#Elasticsearch7新增参数，写入候选主节点的设备地址，来开启服务时就可以被选为主节点
+
+discovery.zen.ping.unicast.hosts: ["10.150.55.94:9301", "10.150.55.95:9301","10.150.30.246:9301"]   
+#在Elasticsearch7.0版本已被移除，配置错误
+#写入候选主节点的设备地址，来开启服务时就可以被选为主节点
+#默认主机列表只有127.0.0.1和IPV6的本机回环地址
+#上面是书写格式，discover意思为发现，zen是判定集群成员的协议，unicast是单播的意思，ES5.0版本之后只支持单播的方式来进行集群间的通信，hosts为主机
+#总结下来就是：使用zen协议通过单播方式去发现集群成员主机，在此建议将所有成员的节点名称都写进来，这样就不用仅靠集群名称cluster.name来判别集群关系了
+
+discovery.zen.minimum_master_nodes: 2           
+#在Elasticsearch7.0版本已被移除，配置无效
+#为了避免脑裂，集群的最少节点数量为，集群的总节点数量除以2加一
+
+discovery.zen.fd.ping_timeout: 120s             
+#在Elasticsearch7.0版本已被移除，配置无效
+#探测超时时间，默认是3秒，我们这里填120秒是为了防止网络不好的时候ES集群发生脑裂现象
+
+discovery.zen.fd.ping_retries: 6                
+#在Elasticsearch7.0版本已被移除，配置无效
+#探测次数，如果每次探测90秒，连续探测超过六次，则认为节点该节点已脱离集群，默认为3次
+
+discovery.zen.fd.ping_interval: 15s             
+#在Elasticsearch7.0版本已被移除，配置无效
+#节点每隔15秒向master发送一次心跳，证明自己和master还存活，默认为1秒太频繁,
+
+discovery.seed_hosts: ["10.150.55.94:9301", "10.150.55.95:9301","10.150.30.246:9301"]
+#Elasticsearch7新增参数，写入候选主节点的设备地址，来开启服务时就可以被选为主节点,由discovery.zen.ping.unicast.hosts:参数改变而来
+
+index.number_of_shards: 5
+# 设置默认索引分片个数，默认为5片。
+
+index.number_of_replicas: 1
+# 设置默认索引副本个数，默认为1个副本。如果采用默认设置，而你集群只配置了一台机器，那么集群的健康度为yellow，也就是所有的数据都是可用的，但是某些复制没有被分配
+# （健康度可用 curl 'localhost:9200/_cat/health?v' 查看， 分为绿色、黄色或红色。绿色代表一切正常，集群功能齐全，黄色意味着所有的数据都是可用的，但是某些复制没有被分配，红色则代表因为某些原因，某些数据不可用）。
 
 bootstrap.memory_lock: true
 #在ES运行起来后锁定ES所能使用的堆内存大小，锁定内存大小一般为可用内存的一半左右；锁定内存后就不会使用交换分区
@@ -51,38 +101,23 @@ transport.tcp.compress: true
 http.max_content_length: 200mb
 #设置http请求内容的最大容量，默认是100mb
 
-http.cors.enabled: true
-#是否开启跨域访问
+gateway.type: local
+# gateway的类型，默认为local即为本地文件系统，可以设置为本地文件系统，分布式文件系统，hadoop的HDFS，和amazon的s3服务器等。
 
-http.cors.allow-origin: "*"
-#开启跨域访问后的地址限制，*表示无限制
+gateway.recover_after_nodes: 1
+# 设置集群中N个节点启动时进行数据恢复，默认为1。
 
-http.port: 9201
-#定义ES对外调用的http端口，默认是9200
+gateway.recover_after_time: 5m
+# 设置初始化数据恢复进程的超时时间，默认是5分钟。
 
-discovery.zen.ping.unicast.hosts: ["10.150.55.94:9301", "10.150.55.95:9301","10.150.30.246:9301"]    #在Elasticsearch7.0版本已被移除，配置错误
-#写入候选主节点的设备地址，来开启服务时就可以被选为主节点
-#默认主机列表只有127.0.0.1和IPV6的本机回环地址
-#上面是书写格式，discover意思为发现，zen是判定集群成员的协议，unicast是单播的意思，ES5.0版本之后只支持单播的方式来进行集群间的通信，hosts为主机
-#总结下来就是：使用zen协议通过单播方式去发现集群成员主机，在此建议将所有成员的节点名称都写进来，这样就不用仅靠集群名称cluster.name来判别集群关系了
+gateway.expected_nodes: 2
+# 设置这个集群中节点的数量，默认为2，一旦这N个节点启动，就会立即进行数据恢复。
 
-discovery.zen.minimum_master_nodes: 2           #在Elasticsearch7.0版本已被移除，配置无效
-#为了避免脑裂，集群的最少节点数量为，集群的总节点数量除以2加一
+indices.recovery.max_size_per_sec: 0
+# 设置数据恢复时限制的带宽，如入100mb，默认为0，即无限制。
 
-discovery.zen.fd.ping_timeout: 120s             #在Elasticsearch7.0版本已被移除，配置无效
-#探测超时时间，默认是3秒，我们这里填120秒是为了防止网络不好的时候ES集群发生脑裂现象
-
-discovery.zen.fd.ping_retries: 6                #在Elasticsearch7.0版本已被移除，配置无效
-#探测次数，如果每次探测90秒，连续探测超过六次，则认为节点该节点已脱离集群，默认为3次
-
-discovery.zen.fd.ping_interval: 15s             #在Elasticsearch7.0版本已被移除，配置无效
-#节点每隔15秒向master发送一次心跳，证明自己和master还存活，默认为1秒太频繁,
-
-discovery.seed_hosts: ["10.150.55.94:9301", "10.150.55.95:9301","10.150.30.246:9301"]
-#Elasticsearch7新增参数，写入候选主节点的设备地址，来开启服务时就可以被选为主节点,由discovery.zen.ping.unicast.hosts:参数改变而来
-
-cluster.initial_master_nodes: ["10.150.55.94:9301", "10.150.55.95:9301","10.150.30.246:9301"]
-#Elasticsearch7新增参数，写入候选主节点的设备地址，来开启服务时就可以被选为主节点
+indices.recovery.concurrent_streams: 5
+# 设置这个参数来限制从其它分片恢复数据时最大同时打开并发流的个数，默认为5。
 
 cluster.fault_detection.leader_check.interval: 15s 
 #Elasticsearch7新增参数，设置每个节点在选中的主节点的检查之间等待的时间。默认为1秒
