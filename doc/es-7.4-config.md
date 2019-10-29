@@ -12,7 +12,7 @@ node.data: false
 #允许该节点存储索引数据（默认开启）
 #关于Elasticsearch节点的角色功能详解，请看：https://www.dockerc.com/elasticsearch-master-or-data/
 
-path.data: /data/ES-Cluster/master/ES-master-10.150.55.94/data1,/data/ES-Cluster/master/ES-master-10.150.55.94/data2
+path.data: /data/ES-Cluster/es01/data1,/data/ES-Cluster/es01/data2
 #ES是搜索引擎，会创建文档，建立索引，此路径是索引的存放目录，如果我们的日志数据较为庞大，那么索引所占用的磁盘空间也是不可小觑的
 #这个路径建议是专门的存储系统，如果不是存储系统，最好也要有冗余能力的磁盘，此目录还要对elasticsearch的运行用户有写入权限
 #path可以指定多个存储位置，分散存储，有助于性能提升，以至于怎么分散存储请看详解https://www.dockerc.com/elk-theory-elasticsearch/
